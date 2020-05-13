@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('find_vencodes/', include('find_vencodes.urls')),
+    path('', include('vencode.urls')),
     path('admin/', admin.site.urls),
-
+    path('accounts/', include('allauth.urls')),  # add for allauth
 ]

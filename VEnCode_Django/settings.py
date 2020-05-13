@@ -38,7 +38,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'vencode.apps.VencodeConfig',
+    'users',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.twitter',
 ]
+
+# Override the default Django's user model by setting AUTH_USER_MODEL:
+AUTH_USER_MODEL = 'users.CustomUser'
+
+
+# redirect users after login and logout:
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +70,7 @@ ROOT_URLCONF = 'VEnCode_Django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'accounts')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -77,8 +92,12 @@ WSGI_APPLICATION = 'VEnCode_Django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'vencode',
+        'USER': 'postgres',
+        'PASSWORD': 'p0stgr3s!',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -123,3 +142,19 @@ STATIC_URL = '/static/'
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
+
+# for allauth authentication:
+AUTHENTICATION_BACKENDS = (
+    # needed to login by username in Django admin, regardless of allauth
+    'django.contrib.auth.backends.ModelBackend',
+    # allauth specific  authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+# for 3rd party provided setup in admin console:
+SITE_ID = 1
+
+# so they can provide e-mail instead of user name put True:
+ACCOUNT_EMAIL_REQUIRED = False
+
+ACCOUNT_USERNAME_REQUIRED = False
