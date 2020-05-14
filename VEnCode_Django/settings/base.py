@@ -14,8 +14,8 @@ import os
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # old base_dir
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,22 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'vencode.apps.VencodeConfig',
     'users',
+    # The Django sites framework is required
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # Login via Twitter
     'allauth.socialaccount.providers.twitter',
 ]
 
 # Override the default Django's user model by setting AUTH_USER_MODEL:
 AUTH_USER_MODEL = 'users.CustomUser'
-
-
-# redirect users after login and logout:
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,7 +66,7 @@ ROOT_URLCONF = 'VEnCode_Django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'accounts')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'account')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -86,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'VEnCode_Django.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -100,7 +95,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -120,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -133,7 +126,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -154,7 +146,12 @@ AUTHENTICATION_BACKENDS = (
 # for 3rd party provided setup in admin console:
 SITE_ID = 1
 
-# so they can provide e-mail instead of user name put True:
+# Allauth configurations (Check: https://django-allauth.readthedocs.io/en/latest/configuration.html):
 ACCOUNT_EMAIL_REQUIRED = False
-
 ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_EMAIL_SUBJECT_PREFIX = 'VEnCode | '
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+
+# redirect users after login and logout:
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
