@@ -1,9 +1,6 @@
 from .base import *
 import dj_database_url
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -16,13 +13,13 @@ ADMINS = (
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'VEnCode_Django.urls'
@@ -33,10 +30,10 @@ ROOT_URLCONF = 'VEnCode_Django.urls'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vencode',
-        'USER': 'postgres',
+        'NAME': config("DB_NAME"),
+        'USER': config("DB_USER"),
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'HOST': config("DB_HOST"),
         'PORT': '',
     }
 }
@@ -45,7 +42,6 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())

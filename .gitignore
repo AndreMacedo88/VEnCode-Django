@@ -15,3 +15,4 @@ users/migrations/__pycache__/
 vencode/__pycache__/
 vencode/migrations/__pycache__/
 /vencode_bu
+/.env
