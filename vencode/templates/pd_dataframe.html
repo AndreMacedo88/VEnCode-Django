@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}DataFrame{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+{{ block.super }}
+{% endblock stylesheets %}
+
+{% block body %}
+{% autoescape off %}
+    <div>
+    <table
+        data-toggle="table"
+        data-pagination="true"
+        data-thead-classes="thead-dark"
+        data-show-toggle="true"
+        data-show-fullscreen="true"
+        data-show-columns="true"
+        data-show-columns-toggle-all="true"
+        data-show-export="true"
+        data-show-pagination-switch="true"
+        data-pagination="true"
+        data-page-list="[10, 25, 50, 100, all]"
+        data-show-footer="true"
+    >
+   {{ html_table }}
+    </table>
+    </div>
+{% endautoescape %}
+{% endblock body %}
+
+{% block scriptsbody %}
+{{ block.super }}
+<script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+{% endblock scriptsbody %}
