@@ -7,16 +7,22 @@
 {% block head_title %}User Profile{% endblock head_title %}
 
 {% block body %}
-    <a href="{% provider_login_url "twitter" process="connect" %}">Connect a Twitter account</a>
-    <br>
-    {{ user.username }}
-    <br>
-    {{ user.email }}
-    <br>
-    <span>{{ socialaccount_providers }}</span>
-    <br>
-    {% if accounts %}
-    <span>{{accounts.twitter}}</span>
-    {% endif %}
-
+    <br><br>
+    <div class="container d-flex justify-content-center align-items-center">
+    <div class="card">
+      <div class="card-body">
+        <a href="{% provider_login_url "twitter" process="connect" %}">Connect a Twitter account</a>
+        <br>
+        {{ user.username }}
+        <br>
+        {{ user.email }}
+        <br>
+        <span>{{ socialaccount_providers }}</span>
+        <br>
+        {% if accounts %}
+        <span>{{accounts.twitter}}</span>
+        {% endif %}
+      </div>
+    </div>
+    </div>
 {% endblock body %}
