@@ -13,9 +13,9 @@
       <div class="card-body">
         <a href="{% provider_login_url "twitter" process="connect" %}">Connect a Twitter account</a>
         <br>
-        {{ user.username }}
+        <span> User: {{ user.username }} </span>
         <br>
-        {{ user.email }}
+        <span> E-mail: {{ user.email }} </span>
         <br>
         <span>{{ socialaccount_providers }}</span>
         <br>
