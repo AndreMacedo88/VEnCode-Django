@@ -1,0 +1,10 @@
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+  color: #ffc107 !important;
+}
+.navbar-dark .navbar-brand:hover {
+    color: #ffc107;
+}
+.btn-elegant:hover {
+    color: #ffc107;
+}
