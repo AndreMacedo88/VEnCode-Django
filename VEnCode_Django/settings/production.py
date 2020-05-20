@@ -52,3 +52,6 @@ DATABASES['default'].update(db_from_env)
 
 # Activate django-heroku
 django_heroku.settings(locals())
+
+# Allauth configurations, backend to send sign-in e-mail verification e-mail:
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

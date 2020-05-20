@@ -8,7 +8,7 @@
 <h1>{% trans "Account Connections" %}</h1>
 
 {% if form.accounts %}
-<p>{% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}</p>
+<p>{% blocktrans %}You can currently log in to your account using any of the following third party accounts:{% endblocktrans %}</p>
 
 
 <form method="post" action="{% url 'socialaccount_connections' %}">
@@ -24,15 +24,16 @@
 <div>
 <label for="id_account_{{ base_account.id }}">
 <input id="id_account_{{ base_account.id }}" type="radio" name="account" value="{{ base_account.id }}"/>
-<span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}</span>
-{{ account }}
+<span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}
+account </span>
+-> {{ account }}
 </label>
 </div>
 {% endwith %}
 {% endfor %}
 
 <div>
-<button type="submit">{% trans 'Remove' %}</button>
+<button type="submit">{% trans 'Remove connection' %}</button>
 </div>
 
 </fieldset>
@@ -43,7 +44,8 @@
 <p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
 {% endif %}
 
-<h2>{% trans 'Add a 3rd Party Account' %}</h2>
+<br>
+<h5>{% trans 'Add a 3rd party account from the available list:' %}</h5>
 
 <ul class="socialaccount_providers">
 {% include "socialaccount/snippets/provider_list.html" with process="connect" %}

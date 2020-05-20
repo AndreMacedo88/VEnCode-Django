@@ -3,8 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="home"),
-    path('index/', views.index, name='index'),
-    path('users/', include('users.urls')),
     path('table/', views.promoter_data_all, name='promoters')
     # path('users/', include('django.contrib.auth.urls')),  # remove this when using allauth
 ]

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load account socialaccount %}
+{% providers_media_js %}
+{% get_providers as socialaccount_providers %}
+{% get_social_accounts user as accounts %}
+
+{% block head_title %}User Profile{% endblock head_title %}
+
+{% block body %}
+    <a href="{% provider_login_url "twitter" process="connect" %}">Connect a Twitter account</a>
+    <br>
+    {{ user.username }}
+    <br>
+    {{ user.email }}
+    <br>
+    <span>{{ socialaccount_providers }}</span>
+    <br>
+    {% if accounts %}
+    <span>{{accounts.twitter}}</span>
+    {% endif %}
+
+{% endblock body %}

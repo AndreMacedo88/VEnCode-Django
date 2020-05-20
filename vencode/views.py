@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime
-import ast
 from .models import Promoters154CellsBinarized
 
 
@@ -9,10 +8,6 @@ from .models import Promoters154CellsBinarized
 def home(request):
     return render(request, "home.html",
                   {'date': datetime.now().year})
-
-
-def index(request):
-    return HttpResponse("Under construction!")
 
 
 def promoter_data_all(request):

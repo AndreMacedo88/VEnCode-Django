@@ -1,7 +1,5 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
-from django.contrib import admin
 
-urlpatterns = [
-    path('signup/', views.SignUp.as_view(), name='signup'),
-]
+urlpatterns = [path('profile/', views.get_user_profile, name='profile'),
+               ]

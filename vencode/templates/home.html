@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}VEnCode App{% endblock head_title %}
+
+{% block stylesheets %}
+
+    {{ block.super }}
+
+{% endblock stylesheets %}
+{% block content %}
+
+     <div class="jumbotron text-center">
+         <br> <br>
+         <h1>Welcome to the VEnCode Website</h1>
+         <hr style="width:50%">
+         <div class="caption text-center">
+             <h3>Here you can find, retrieve and rank VEnCodes</h3>
+         </div>
+     </div>
+
+{% endblock content %}
+{% block content2 %}
+
+<!--Main layout-->
+  <main class="mt-5">
+    <!--Main container-->
+    <div class="container-fluid">
+        <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-md-7 mb-4">
+          <div class="view overlay z-depth-1-half">
+            <img src="{% static "images/dna-strings.jpg" %}" class="card-img-top" alt="">
+              <a href="https://www.biorxiv.org/content/10.1101/552984v3">
+                  <div class="mask rgba-white-light"></div>
+              </a>
+          </div>
+        </div>
+        <!--Grid column-->
+        <!--Grid column-->
+        <div class="col-md-5 mb-4">
+          <h2>What are VEnCodes?</h2>
+          <hr>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis pariatur quod ipsum atque quam
+            dolorem
+            voluptate officia sunt placeat consectetur alias fugit cum praesentium ratione sint mollitia, perferendis
+            natus quaerat!</p>
+          <a href="https://www.biorxiv.org/content/10.1101/552984v3" class="btn btn-elegant">Read the source article</a>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <!--Card-->
+          <div class="card">
+            <!--Card image-->
+            <div class="view overlay">
+              <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(72).jpg" class="card-img-top"
+                alt="">
+              <a href="">
+                <div class="mask rgba-white-slight"></div>
+              </a>
+            </div>
+            <!--Card content-->
+            <div class="card-body">
+              <!--Title-->
+              <h4 class="card-title">Find VEnCodes using the FANTOM5 CAGE-seq data</h4>
+              <!--Text-->
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                card's content.</p>
+              <a href="" class="btn btn-elegant">Get VEnCodes</a>
+            </div>
+          </div>
+          <!--/.Card-->
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <!--Card-->
+          <div class="card">
+            <!--Card image-->
+            <div class="view overlay">
+              <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(74).jpg" class="card-img-top"
+                alt="">
+              <a href="">
+                <div class="mask rgba-white-slight"></div>
+              </a>
+            </div>
+            <!--Card content-->
+            <div class="card-body">
+              <!--Title-->
+              <h4 class="card-title">Find VEnCodes using your own data</h4>
+              <!--Text-->
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                card's content.</p>
+              <a href="" class="btn btn-elegant">Get VEnCodes</a>
+            </div>
+          </div>
+          <!--/.Card-->
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <!--Card-->
+          <div class="card">
+            <!--Card image-->
+            <div class="view overlay">
+              <img src="{% static "images/code.jpg" %}" class="card-img-top"
+                alt="">
+              <a href="https://github.com/AndreMacedo88/VEnCode">
+                <div class="mask rgba-white-slight"></div>
+              </a>
+            </div>
+            <!--Card content-->
+            <div class="card-body">
+              <!--Title-->
+              <h4 class="card-title">Use the source algorithms in your own projects</h4>
+              <!--Text-->
+              <p class="card-text">The source code for the algorithms is available from GitHub and a package has been
+                  made available to install in python.</p>
+              <a href="https://github.com/AndreMacedo88/VEnCode" class="btn btn-elegant">GitHub source<span>&ensp;</span><i class="fa fa-github"></i></a>
+            </div>
+          </div>
+          <!--/.Card-->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+    <!--Main container-->
+  </main>
+  <!--Main layout-->
+
+{% endblock content2 %}

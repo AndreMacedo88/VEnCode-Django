@@ -38,14 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # My apps:
     'vencode.apps.VencodeConfig',
     'users',
-    # The Django sites framework is required
+    # Allauth required apps:
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # Login via Twitter
+    # Login via Twitter:
     'allauth.socialaccount.providers.twitter',
 ]
 
@@ -67,7 +68,8 @@ ROOT_URLCONF = 'VEnCode_Django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'account')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'account'),
+                 os.path.join(BASE_DIR, 'templates', 'socialaccount')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -141,7 +143,7 @@ django_heroku.settings(locals())
 AUTHENTICATION_BACKENDS = (
     # needed to login by username in Django admin, regardless of allauth
     'django.contrib.auth.backends.ModelBackend',
-    # allauth specific  authentication methods, such as login by e-mail
+    # allauth specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
@@ -149,10 +151,15 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 # Allauth configurations (Check: https://django-allauth.readthedocs.io/en/latest/configuration.html):
-ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_EMAIL_SUBJECT_PREFIX = 'VEnCode | '
+# Use email as the primary identifier:
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Make email verification mandatory to avoid junk email accounts
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_SUBJECT_PREFIX = 'VEnCode | '
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # redirect users after login and logout:
 LOGIN_REDIRECT_URL = 'home'

@@ -20,4 +20,5 @@ urlpatterns = [
     path('', include('vencode.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # add for allauth
+    path('accounts/', include('users.urls'))
 ]
