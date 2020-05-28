@@ -25,6 +25,8 @@
     <link href="{% static "css/navbar-objects.css" %}" rel="stylesheet">
     <!-- My text colors -->
     <link href="{% static "css/text-colors.css" %}" rel="stylesheet">
+    <!-- My body styles -->
+    <link href="{% static "css/body-style.css" %}" rel="stylesheet">
 {% endblock stylesheets %}
 {% block extrahead %}
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark elegant-color justify-content-between navbar-custom">
@@ -75,7 +77,7 @@
     </nav>
 {% endblock extrahead %}
 </head>
-<body>
+<body class="mt-5">
 {% block body %}
 {% block content %}
 {% endblock content %}

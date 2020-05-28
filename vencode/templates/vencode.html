@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}VEnCodes list{% endblock head_title %}
+
+{% block stylesheets %}
+<link href="{%  static "css/bootstrap-table.min.css" %}" rel="stylesheet">
+{{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+    {% for ven in vencode_html %}
+    {% autoescape off %}
+    <div>
+    <table
+            data-buttons-class = "elegant-color"
+            data-toggle="table"
+            data-pagination="false"
+            data-thead-classes="thead-dark"
+            data-show-toggle="true"
+            data-show-fullscreen="false"
+            data-show-columns="true"
+            data-show-columns-toggle-all="true"
+            data-show-export="true"
+            data-show-pagination-switch="false"
+            data-page-list="[10, 25, 50, 100, all]"
+            data-show-footer="true"
+    >
+   {{ ven }}
+    </table>
+    </div>
+    {% endautoescape %}
+    {% endfor %}
+{% endblock content %}
+
+{% block scriptsbody %}
+{{ block.super }}
+<script src="{%  static "js/tableExport.min.js" %}"></script>
+<script src="{%  static "js/bootstrap-table.min.js" %}"></script>
+<script src="{%  static "js/bootstrap-table-export.min.js" %}"></script>
+{% endblock scriptsbody %}

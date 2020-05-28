@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Find VEnCodes{% endblock head_title %}
+
+{% block content %}
+    <br>
+    <div>
+        <form action="{% url 'vencode_df' %}" method="post">
+        {% csrf_token %}
+        <label for="vencodes">Your name: </label>
+        <input id="vencodes" type="text" name="vencodes" value="{{ e_values }}">
+        <input type="submit" value="Show VEnCode data">
+        </form>
+{#    <a href="{% url 'vencode_df' %}"  class="btn btn-elegant">Show VEnCode data</a>#}
+    </div>
+{% endblock content %}

@@ -50,8 +50,9 @@ django_heroku.settings(locals())
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
-# Activate django-heroku
-django_heroku.settings(locals())
-
 # Allauth configurations, backend to send sign-in e-mail verification e-mail:
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# REDIS related settings
+CELERY_BROKER_URL = os.environ['REDIS_URL'],
+CELERY_RESULT_BACKEND = os.environ['REDIS_URL']

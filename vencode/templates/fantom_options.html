@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Choose Parameters - FANTOM5{% endblock head_title %}
+
+{% block content %}
+    <br>
+<form action="{% url 'find_fantom' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock content %}

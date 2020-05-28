@@ -3,41 +3,46 @@
 {% load i18n %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block head_title %}{% trans "Signup - VEnCode" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Sign Up" %}</h1>
 
 {% get_providers as socialaccount_providers %}
 
-{% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign up for a {{ site_name }} account with one
-of your existing third party accounts, or by filling the form below.
-Or, if you already have an account, <a href="{{ login_url }}">log in.</a>{% endblocktrans %}</p>
-
-<div class="socialaccount_ballot">
-
-    <ul class="socialaccount_providers">
-        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-    </ul>
-
-<div class="login-or">{% trans 'or' %}</div>
-<br>
-</div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% else %}
-    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">log in</a>.{% endblocktrans %}</p>
-{% endif %}
-
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+<form class="signup text-left p-5" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
-  {{ form.as_p }}
+
+    <p class="h4 mb-4 text-center">Sign up</p>
+
+    {{ form.as_p }}
+
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+  <button class="btn btn-info my-4 btn-block btn-elegant" type="submit">Sign up</button>
+
+    <!-- Social register -->
+    {% if socialaccount_providers %}
+    <p>{% blocktrans%}or sign up for an account with:
+    {% endblocktrans %}</p>
+
+    <div class="socialaccount_ballot">
+
+        <ul class="socialaccount_providers" style="list-style: none;">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        </ul>
+
+    <div class="login-or">{% blocktrans %} If you already have an account, <a href="{{ login_url }}">log in.</a> {% endblocktrans %}
+    </div>
+    <br>
+    </div>
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% else %}
+        <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">log in</a>.{% endblocktrans %}</p>
+    {% endif %}
+
 </form>
 
 {% endblock %}
