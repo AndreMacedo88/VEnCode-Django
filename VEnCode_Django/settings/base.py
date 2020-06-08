@@ -161,7 +161,6 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = 'VEnCode | '
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # redirect users after login and logout:
 LOGIN_REDIRECT_URL = 'home'

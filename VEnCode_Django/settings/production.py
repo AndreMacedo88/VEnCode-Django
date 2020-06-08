@@ -58,3 +58,10 @@ CELERY_BROKER_URL = config('REDIS_URL', default="redis://")
 CELERY_RESULT_BACKEND = config('REDIS_URL', default="redis://")
 BROKER_URL = config('REDIS_URL', default="redis://")
 
+# Allauth related settings
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
