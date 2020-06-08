@@ -2,7 +2,7 @@ from .base import *
 import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -54,7 +54,7 @@ DATABASES['default'].update(db_from_env)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # REDIS related settings
-CELERY_BROKER_URL = config('REDIS_URL')
-CELERY_RESULT_BACKEND = config('REDIS_URL')
-BROKER_URL = config('REDIS_URL')
+CELERY_BROKER_URL = config('REDIS_URL', default="redis://")
+CELERY_RESULT_BACKEND = config('REDIS_URL', default="redis://")
+BROKER_URL = config('REDIS_URL', default="redis://")
 
