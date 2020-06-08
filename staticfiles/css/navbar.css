@@ -1,0 +1,15 @@
+.navbar-nav {
+    font-size: 1.1rem;
+}
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+.navbar-dark .dropdown-menu {
+    background-color: #fcc839;
+}
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
