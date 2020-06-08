@@ -1,20 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-
-from VEnCode import DataTpm, Vencodes
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.urls import reverse
+from VEnCode_Django.celery import app, debug_task
 
 from .models import Promoters154CellsBinarized
 from .utils_views import *
-from .forms import FantomForm
-from .tasks import sleepy
+from .forms import FantomForm, UploadFileForm
+from .tasks import fantom_results_task, uploaded_results_task
 
 
 # Create your views here.
 def home(request):
-    return render(request, "home.html")
+    template = "home.html"
+    return render(request, template)
 
 
-def vencode_fantom_options(request):
+def fantom_options(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -22,45 +23,87 @@ def vencode_fantom_options(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            request.session['cell_type'] = request.POST['cell_type']
+            args = [
+                form.cleaned_data.get('data_type'),
+                form.cleaned_data.get('cell_type'),
+                form.cleaned_data.get('algorithm'),
+                form.cleaned_data.get('k'),
+                form.cleaned_data.get('num_ven')
+            ]
+            task = fantom_results_task.delay(*args)
+            task_id = task.id
+            request.session['task_id'] = task_id
             # redirect to a new URL:
-            return HttpResponseRedirect('results/')
+            return HttpResponseRedirect(reverse('find_ven_results'))
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = FantomForm()
-    return render(request, 'fantom_options.html', {'form': form})
+    template = 'fantom_options.html'
+    return render(request, template, {'form': form})
 
 
-def vencode_fantom_results(request):
-    cell_type = request.session.get('cell_type')
+def find_ven_results(request):
+
     template = 'vencode_results.html'
-    qs = Promoters154CellsBinarized.pdobjects.all()
-    df = qs.to_dataframe(index='index')
-    data = DataTpm(df)
-    data.load_data()
-    data.make_data_celltype_specific(cell_type, replicates=True)
-    data.filter_by_target_celltype_activity(threshold=0.9)
-    vencodes = Vencodes(data, algorithm="heuristic")
-    vencodes.next(2)
-    vencode = vencodes.get_vencode_data(method="return")
-    ven_html = list()
-    for ven in vencode:
-        ven.reset_index(level=0, inplace=True)
-        ven_html.append(prepare_df(ven))
-    vencodes.determine_e_values()
-    return render(request, template, {"vencode_html": ven_html, "e_values": vencodes.e_values})
+    context = {
+        "check_status": 1,
+    }
+    return render(request, template, context)
+
+
+def find_ven_status(request):
+    task_id = request.session.get('task_id')
+    celery_task_results = app.AsyncResult(task_id)
+    status = celery_task_results.status
+    json_data = {'status': status}
+    return JsonResponse(json_data)
 
 
 def get_vencodes(request):
-    vencodes = request.POST.get('vencodes')
+    task_id = request.session.get('task_id')
+    task_results = app.AsyncResult(id=task_id)
+    results_tuple = task_results.get()
+    task_results.forget()
     template = "vencode.html"
-    vencode = vencodes.get_vencode_data(method="return")
-    ven_html = list()
-    for ven in vencode:
-        ven.reset_index(level=0, inplace=True)
-        ven_html.append(prepare_df(ven))
-    return render(request, template, {"vencode_html": ven_html})
+    return render(request, template, {"vencode_html": results_tuple[0]})
+
+
+def get_e_values(request):
+    task_id = request.session.get('task_id')
+    task_results = app.AsyncResult(id=task_id)
+    results_tuple = task_results.get()
+    task_results.forget()
+    template = "e_values.html"
+    return render(request, template, {"e_values": results_tuple[1]})
+
+
+def upload_file_ven(request):
+    def handle_uploaded_file(f):
+        _file_name = '_temp_uploaded.txt'
+        with open(_file_name, 'wb+') as destination:
+            for chunk in f.chunks():
+                destination.write(chunk)
+        return _file_name
+
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file_name = handle_uploaded_file(request.FILES['file'])
+            args = [
+                form.cleaned_data.get('cell_type'),
+                form.cleaned_data.get('algorithm'),
+                form.cleaned_data.get('k'),
+                form.cleaned_data.get('num_ven')
+            ]
+            task = uploaded_results_task.delay(file_name, *args)
+            task_id = task.id
+            request.session['task_id'] = task_id
+            return HttpResponseRedirect(reverse('find_ven_results'))
+    else:
+        form = UploadFileForm()
+    template = 'upload_ven_options.html'
+    return render(request, template, {'form': form})
 
 
 def promoter_data_all(request):
@@ -72,9 +115,7 @@ def promoter_data_all(request):
     return render(request, template, {'html_table': html_table})
 
 
-from django.http import HttpResponse
-
-
 def test_celery(request):
-    soda = sleepy.delay(20, 3, 8)
-    return HttpResponse(f'Donee!')
+    res = debug_task.delay()
+    print(res.get())
+    return HttpResponse("Hi there fella!")

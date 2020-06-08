@@ -1,2 +1,2 @@
 web: python manage.py runserver 0.0.0.0:5000
-worker: celery worker --app=VEnCode_Django.celery
+worker: celery worker -A VEnCode_Django --without-gossip --without-mingle --without-heartbeat -Ofair --pool=solo

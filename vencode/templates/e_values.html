@@ -1,7 +1,7 @@
 {% extends "vencode_results.html" %}
 {% load static %}
 
-{% block head_title %}VEnCodes Data{% endblock head_title %}
+{% block head_title %}VEnCodes e-values{% endblock head_title %}
 
 {% block stylesheets %}
 <link href="{%  static "css/bootstrap-table.min.css" %}" rel="stylesheet">
@@ -9,7 +9,6 @@
 {% endblock stylesheets %}
 
 {% block content2 %}
-    {% for ven in vencode_html %}
     {% autoescape off %}
     <div class="container-fluid">
     <table
@@ -26,11 +25,23 @@
             data-page-list="[10, 25, 50, 100, all]"
             data-show-footer="true"
     >
-   {{ ven }}
+    <thead>
+        <tr>
+          <th>VEnCode</th>
+          <th>e-value</th>
+        </tr>
+    </thead>
+        <tbody>
+            {% for re, e in e_values.items %}
+                <tr>
+                    <td>{{ re }}</td>
+                    <td>{{ e }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
     </div>
     {% endautoescape %}
-    {% endfor %}
 {% endblock content2 %}
 
 {% block scriptsbody %}

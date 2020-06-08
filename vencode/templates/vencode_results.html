@@ -1,17 +1,94 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block head_title %}Find VEnCodes{% endblock head_title %}
+{% block head_title %}Find VEnCodes in FANTOM5 data{% endblock head_title %}
 
 {% block content %}
-    <br>
+<!--Main layout-->
+  <main class="mt-5">
     <div>
-        <form action="{% url 'vencode_df' %}" method="post">
-        {% csrf_token %}
-        <label for="vencodes">Your name: </label>
-        <input id="vencodes" type="text" name="vencodes" value="{{ e_values }}">
-        <input type="submit" value="Show VEnCode data">
-        </form>
-{#    <a href="{% url 'vencode_df' %}"  class="btn btn-elegant">Show VEnCode data</a>#}
+        <p id="its_ready" class="ml-5">Your request is being computed, please wait a few seconds.</p>
     </div>
+    <!--Main container-->
+    <div class="container-fluid row text-justify ml-1">
+        <div class = "col-2 d-flex align-items-stretch">
+        <!-- Card -->
+        <div class="card">
+          <!-- Card content -->
+          <div class="card-body">
+            <!-- Title -->
+            <h4 class="card-title"><a>VEnCode Data</a></h4>
+            <!-- Text -->
+            <p class="card-text">Retrieve the full expression data set for the regulatory elements that constitute a VEnCode.</p>
+            <!-- Button -->
+            <a href="" role="button" class="btn btn-elegant disabled" id="show_data">Show VEnCode data</a>
+          </div>
+        </div>
+        </div>
+        <div class = "col-2 d-flex align-items-stretch">
+        <div class="card">
+          <!-- Card content -->
+          <div class="card-body">
+            <!-- Title -->
+            <h4 class="card-title"><a>VEnCode <em>E</em> -value</a></h4>
+            <!-- Text -->
+            <p class="card-text">Retrieve the <em>E</em> -values for the retrieved VEnCodes.</p>
+            <!-- Button -->
+              <a href="" role="button" class="btn btn-elegant disabled" id="show_e_values">Show <em>e</em> -value data</a>
+          </div>
+        </div>
+        </div>
+    </div>
+  <hr style="width:95%">
+  </main>
 {% endblock content %}
+
+{% block javascript %}
+    <script>
+      function showAlert() {
+        alert("Your request is still being computed, please wait a few seconds and try again.");
+      }
+      $(function() { $('#show_data').on('click', function(){ showAlert(); return false; }); })
+    </script>
+
+    <script type="text/javascript">
+        function changes_active() {
+            $("#show_data").attr("href", "{% url 'vencode_df' %}")
+                .off('click')
+                .toggleClass("disabled");
+            $("#show_e_values").attr("href", "{% url 'e_values' %}")
+                .off('click')
+                .toggleClass("disabled");
+            document.getElementById("its_ready").innerHTML = "Your VEnCodes are ready";
+        }
+
+        $(function(){
+        let ajax_element;
+        {% if check_status %}
+            var checkStatus = {{ check_status }};
+        {% else %}
+            var checkStatus = false
+        {% endif %}
+
+            var update = function () {
+                ajax_element = $.ajax({
+                    url: '{% url "find_ven_status" %}',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.status === "SUCCESS") {
+                            changes_active();
+                            clearInterval(interval);
+                        }
+                    }
+                });
+            }
+        if (checkStatus){
+            interval = setInterval(function(){update();}, 500);
+        }else{
+            changes_active()
+            clearInterval(function(){update();});
+        }
+        })
+  </script>
+
+{% endblock javascript %}

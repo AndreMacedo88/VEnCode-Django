@@ -3,11 +3,6 @@
 
 {% block head_title %}VEnCode App{% endblock head_title %}
 
-{% block stylesheets %}
-
-    {{ block.super }}
-
-{% endblock stylesheets %}
 {% block content %}
 
      <div class="jumbotron text-center">
@@ -73,7 +68,7 @@
               <!--Text-->
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                 card's content.</p>
-              <a href="{% url 'find_fantom' %}" class="btn btn-elegant">Get VEnCodes</a>
+              <a href="{% url 'fantom_find' %}" class="btn btn-elegant">Get VEnCodes</a>
             </div>
           </div>
           <!--/.Card-->
@@ -99,7 +94,7 @@
               <!--Text-->
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                 card's content.</p>
-              <a href="" class="btn btn-elegant">Get VEnCodes</a>
+              <a href="{% url 'upload_ven' %}" class="btn btn-elegant">Get VEnCodes</a>
             </div>
           </div>
           <!--/.Card-->

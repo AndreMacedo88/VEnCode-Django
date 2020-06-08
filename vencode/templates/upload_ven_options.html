@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block head_title %}Choose Parameters - FANTOM5{% endblock head_title %}
+{% block head_title %}Choose Parameters - Your own Data{% endblock head_title %}
 
 {% block content %}
     <br>
@@ -12,7 +12,7 @@
               <!-- Title -->
               <h4 class="card-title"><a>Settings</a></h4>
 
-              <form action="{% url 'fantom_find' %}" method="post">
+              <form enctype="multipart/form-data" action="{% url 'upload_ven' %}" method="post">
                   {% csrf_token %}
                   {{ form|crispy }}
                   <input class="btn btn-elegant" type="submit" value="Submit">

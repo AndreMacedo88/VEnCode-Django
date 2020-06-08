@@ -325,6 +325,9 @@ class Enhancers154CellsBinarized(models.Model):
     tracheal_epithelial_cells = models.BigIntegerField(db_column='Tracheal Epithelial Cells', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     urothelial_cells = models.BigIntegerField(db_column='Urothelial cells', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
 
+    objects = models.Manager()
+    pdobjects = DataFrameManager()  # Pandas-Enabled Manager
+
     class Meta:
         managed = False
         db_table = 'enhancers_154cells_binarized'
