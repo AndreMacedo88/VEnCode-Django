@@ -7,9 +7,9 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 # If DEBUG is False, send the errors to the email:
-ADMINS = (
-    ('Andre', 'andre.lopes.macedo@gmail.com')
-)
+ADMINS = [
+    ('Andre', 'andre.lopes.macedo@gmail.com'),
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
