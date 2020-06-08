@@ -56,3 +56,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # REDIS related settings
 CELERY_BROKER_URL = config('REDIS_URL')
 CELERY_RESULT_BACKEND = config('REDIS_URL')
+BROKER_URL = os.environ['REDIS_URL'],
+CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
